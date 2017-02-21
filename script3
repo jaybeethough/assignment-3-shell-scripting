@@ -2,20 +2,30 @@
 
 # assign variables
 ACTION=${1}
+version=1.0.1
 
 function create_file() {
 
 touch "${1}-54321"
 }
 
+function delete_file() {
+
+if [ -z ${1} ] 
+	then rm "server-54321"
+	else rm "${1}-54321"
+fi
+}
+
 function display_help() {
 
 cat << EOF
-Usage: ${0} {-c|--create|-h|--help} <filename>
+Usage: ${0} {-c|--create|-h|--help|-d|--delete} <filename>
 
 OPTIONS:
 	-c | --create   Create a new file
 	-h | --help	Display the command help
+	-d | --delete   Delete the file
 
 Examples:
 	Create a new file:
@@ -33,6 +43,9 @@ case "$ACTION" in
 		;;
 	-c|--create)
 		create_file "${2:-server}"
+		;;
+	-d|--delete)
+		delete_file "${2}"
 		;;
 	*)
 	echo "Usage ${0} {-c|-h}"
